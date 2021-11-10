@@ -9,7 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 const Navbar = () => {
-    const { user , logout} = useAuth()
+    const { user, logout } = useAuth()
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -28,7 +28,11 @@ const Navbar = () => {
                     </Typography>
                     <Link to='/appiontment'> <Button color="inherit">Appiontment</Button> </Link>
                     {user?.email ?
-                        <Link to='/'> <Button color="inherit" onClick={logout}>Log Out</Button> </Link>
+                        <Box>
+                            <Link to='/dashboard'> <Button color="inherit">Dashboard</Button> </Link>
+                            <Link to='/'> <Button color="inherit" onClick={logout}>Log Out</Button> </Link>
+
+                        </Box>
                         :
                         <Link to='/login'> <Button color="inherit">Log In</Button> </Link>
                     }

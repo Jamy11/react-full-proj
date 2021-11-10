@@ -5,7 +5,7 @@ import useAuth from '../hooks/useAuth';
 
 const Login = () => {
     const [loginData, setLoginData] = useState({});
-    const { user, loginUser, isLoading, authError } = useAuth();
+    const { user, loginUser, isLoading,signInWithGoogle , authError } = useAuth();
 
     const location = useLocation();
     const history = useHistory();
@@ -20,6 +20,10 @@ const Login = () => {
     const handelSubmint = (e) => {
         loginUser(loginData.email, loginData.password, location, history);
         e.preventDefault();
+    }
+
+    const handleGoogleSignIn = () => {
+        signInWithGoogle(location, history)
     }
 
     return (
@@ -52,6 +56,8 @@ const Login = () => {
                             </NavLink>
                             <Button variant="contained" type="submit" sx={{ width: '75%', m: 1 }}>Submit</Button>
                         </form>
+
+                        <Button onClick={handleGoogleSignIn} variant="contained">Google Sign In</Button>
                     </Grid>
 
                     <Grid item xs={12} md={6}>

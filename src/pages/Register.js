@@ -1,13 +1,14 @@
 import { Button, CircularProgress, Container, Grid, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink , useHistory} from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
 const Register = () => {
     const [loginData, setLoginData] = useState({});
+    const history = useHistory();
 
     const { registerUser, isLoading } = useAuth()
-    const handleOnChange = e => {
+    const handleOnBlur = e => {
         // const field = e.target.name;
         // const value = e.target.value;
         // const newLoginData = { ...loginData };
@@ -15,7 +16,7 @@ const Register = () => {
         setLoginData({ ...loginData, [e.target.name]: e.target.value });
     }
     const handelSubmint = (e) => {
-        registerUser(loginData.email, loginData.password)
+        registerUser(loginData.email, loginData.password, loginData.name, history);
         e.preventDefault();
     }
 
@@ -25,7 +26,7 @@ const Register = () => {
 
         )
     }
-
+    console.log(loginData)
     return (
         <>
             <Container>
@@ -36,22 +37,27 @@ const Register = () => {
                         </Typography>
 
                         <form onSubmit={handelSubmint}>
+                            <TextField id="standard-basicds" label="Your Name"
+                                name="name"
+                                variant="standard" sx={{ width: '75%', m: 1 }}
+                                onBlur={handleOnBlur}
+                            />
                             <TextField id="standard-basicd" label="Your Email"
                                 name="email"
                                 type="email" variant="standard" sx={{ width: '75%', m: 1 }}
-                                onChange={handleOnChange}
+                                onBlur={handleOnBlur}
                             />
 
 
                             <TextField id="standard-basics" label="Your Password"
                                 type="password"
                                 name="password" variant="standard" sx={{ width: '75%', m: 1 }}
-                                onChange={handleOnChange}
+                                onBlur={handleOnBlur}
                             />
                             <TextField id="standard-basicsds" label="Confirm Password"
                                 type="password"
                                 name="password2" variant="standard" sx={{ width: '75%', m: 1 }}
-                                onChange={handleOnChange}
+                                onBlur={handleOnBlur}
                             />
 
                             <NavLink
