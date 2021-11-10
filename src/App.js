@@ -7,23 +7,41 @@ import {
   Link
 } from "react-router-dom";
 import Home from './pages/Home';
+import Appiontment from './pages/Appiontment';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import AuthProvider from './context/AuthProvider';
+import PrivateRoute from './PrivateRoute/PrivateRoute';
+
 
 function App() {
   return (
     <div className="App">
-      <Router>
-      <Switch>
-          <Route path="/">
-            <Home />
-          </Route>
-          {/* <Route path="/users">
-            <Users />
-          </Route>
-          <Route path="/">
+      <AuthProvider>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <PrivateRoute exact path="/appiontment">
+
+                <Appiontment />
+
+            </PrivateRoute>
+
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/register">
+              <Register />
+            </Route>
+            {/* <Route path="/">
             <Home />
           </Route> */}
-        </Switch>
-      </Router>
+          </Switch>
+        </Router>
+      </AuthProvider>
+
     </div>
   );
 }
