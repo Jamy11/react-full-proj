@@ -26,17 +26,17 @@ function App() {
             </Route>
             <PrivateRoute exact path="/appiontment">
 
-                <Appiontment />
+              <Appiontment />
 
             </PrivateRoute>
-            <PrivateRoute exact path="/dashboard">
+            <PrivateRoute path="/dashboard">
 
-                <Dashboard />
+              <Dashboard />
 
             </PrivateRoute>
             <PrivateRoute exact path="/appiontment">
 
-                <Appiontment />
+              <Appiontment />
 
             </PrivateRoute>
 
@@ -49,6 +49,9 @@ function App() {
             {/* <Route path="/">
             <Home />
           </Route> */}
+            {/* <Route path='/dashboard/makeadmin'>
+              <MakeAdmin></MakeAdmin>
+            </Route> */}
           </Switch>
         </Router>
       </AuthProvider>

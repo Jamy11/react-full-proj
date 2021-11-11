@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,25 +14,39 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
-import Calender from './shared/Calender'
-import Appointments from '../components/Dashboard.js/Appointments';
-
+import { Button } from '@mui/material';
+import DashBoardHome from './DashBoardHome';
+import {
+    Switch,
+    Route,
+    Link,
+    useRouteMatch
+} from "react-router-dom";
+import MakeAdmin from './MakeAdmin';
+import useAuth from '../hooks/useAuth';
+import AdminRoute from '../AdminRoute/AdminRoute'
 const drawerWidth = 200;
 
 const Dashboard = (props) => {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [date, setDate] = React.useState(new Date())
+    const { admin } = useAuth()
+    let { path, url } = useRouteMatch();
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
-
     const drawer = (
         <div>
             <Toolbar />
             <Divider />
+            <Link to="/appiontment"><Button color="inherit">Appointment</Button></Link>
+            <Link to={`${url}`}><Button color="inherit">Dashboard</Button></Link>
+            {admin && <Box>
+                <Link to={`${url}/makeadmin`}><Button color="inherit">Make Admin</Button></Link>
+                <Link to={`${url}/adddoctor`}><Button color="inherit">Add Doctor</Button></Link>
+            </Box>}
+
             <List>
                 {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                     <ListItem button key={text}>
@@ -48,6 +61,9 @@ const Dashboard = (props) => {
     );
 
     const container = window !== undefined ? () => window().document.body : undefined;
+
+    console.log(admin)
+
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
@@ -110,22 +126,23 @@ const Dashboard = (props) => {
                 sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
             >
                 <Toolbar />
-                <Typography paragraph>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={5}>
-                            <Calender
-                                date={date}
-                                setDate={setDate}
-                            ></Calender>
-                        </Grid>
-                        <Grid item xs={12} sm={7}>
-                            <Appointments date={date}></Appointments>
-                        </Grid>
-                    </Grid>
-                </Typography>
+
+                <Switch>
+                    <Route exact path={path}>
+                        <DashBoardHome />
+                    </Route>
+                    <AdminRoute exact path={`${path}/makeadmin`}>
+                        <MakeAdmin></MakeAdmin>
+                    </AdminRoute>
+                    <AdminRoute exact path={`${path}/adddoctor`}>
+                        <MakeAdmin></MakeAdmin>
+                    </AdminRoute>
+
+                </Switch>
 
             </Box>
-        </Box>
+
+        </Box >
     )
 }
 
